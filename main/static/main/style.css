@@ -1,0 +1,480 @@
+/* Whole webpage */
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #fff3c4;
+    font-family: Georgia, serif;
+    overflow-y: auto;
+}
+
+
+/* Background slideshow */
+
+.background-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+
+/* Every background image */
+
+.background-slider img {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+
+    animation: backgroundSlide 10s infinite;
+}
+
+
+/* Image timing */
+
+.background-slider img:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.background-slider img:nth-child(2) {
+    animation-delay: 2s;
+}
+
+.background-slider img:nth-child(3) {
+    animation-delay: 4s;
+}
+
+.background-slider img:nth-child(4) {
+    animation-delay: 6s;
+}
+
+.background-slider img:nth-child(5) {
+    animation-delay: 8s;
+}
+
+
+/* Background image animation */
+
+@keyframes backgroundSlide {
+
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    10% {
+        opacity: 0.45;
+        transform: translateX(0);
+    }
+
+    20% {
+        opacity: 0.45;
+        transform: translateX(-20px);
+    }
+
+    30% {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* Soft cream layer over the images */
+
+.background-overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(255, 247, 215, 0.35);
+}
+
+
+/* Main content */
+
+.content {
+    position: relative;
+
+    z-index: 2;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* Peacock feather */
+
+.peacock {
+    font-size: 45px;
+
+    margin-bottom: 5px;
+}
+
+
+/* Main heading */
+
+h1 {
+    margin: 5px 0;
+
+    font-size: 48px;
+
+    color: #4b238b;
+}
+
+
+/* Festival text */
+
+.festival {
+    margin: 15px 0;
+
+    font-size: 28px;
+
+    color: #8a5a13;
+}
+
+
+/* Small divider */
+
+.divider {
+    margin: 5px 0 15px;
+
+    font-size: 25px;
+
+    color: #b8860b;
+}
+
+
+/* Name heading */
+
+h2 {
+    margin: 10px 0 15px;
+
+    font-size: 30px;
+
+    color: #4b238b;
+}
+
+
+/* Name input */
+
+.content input {
+    width: 380px;
+
+    max-width: 80%;
+
+    padding: 16px 20px;
+
+    border: 2px solid #c7ad72;
+
+    border-radius: 15px;
+
+    background-color: rgba(255, 255, 255, 0.9);
+
+    font-size: 19px;
+
+    text-align: center;
+
+    outline: none;
+}
+
+
+/* When user clicks the input */
+
+.content input:focus {
+    border-color: #6d28a8;
+}
+
+
+/* Enter button */
+
+.content button {
+    margin-top: 22px;
+
+    padding: 14px 45px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background-color: #6524a8;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-family: Georgia, serif;
+
+    cursor: pointer;
+}
+
+
+/* Button when mouse is over it */
+
+.content button:hover {
+    background-color: #4b1685;
+}
+
+
+/* Bottom feather */
+
+.bottom-divider {
+    margin-top: 25px;
+
+    font-size: 32px;
+}
+
+
+/* Quote */
+
+.quote {
+    margin-top: 10px;
+
+    font-size: 19px;
+
+    font-style: italic;
+
+    color: #805b17;
+}
+/* Krishna transition page */
+
+.transition-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fff3c4;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+
+/* Feather */
+
+.feather {
+    position: absolute;
+
+    left: -150px;
+    top: 25%;
+
+    font-size: 300px;
+
+    animation: featherMove 4s ease-in-out forwards;
+
+    z-index: 3;
+}
+
+
+/* Text in the middle */
+
+.transition-text {
+    text-align: center;
+
+    opacity: 0;
+
+    animation: showText 2s ease-in-out forwards;
+}
+
+.transition-text h1 {
+    font-size: 45px;
+
+    color: #4b238b;
+}
+
+.transition-text p {
+    font-size: 22px;
+
+    color: #8a5a13;
+}
+
+
+/* Feather movement */
+
+@keyframes featherMove {
+
+    0% {
+        left: -150px;
+        transform: rotate(-20deg);
+    }
+
+    50% {
+        left: 45%;
+        transform: rotate(20deg);
+    }
+
+    100% {
+        left: 110%;
+        transform: rotate(-20deg);
+    }
+
+}
+
+
+/* Text slowly appears */
+
+@keyframes showText {
+
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+/* Game menu */
+
+.game-menu {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.game-menu a {
+    display: block;
+
+    width: 220px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background-color: rgba(255, 255, 255, 0.85);
+
+    color: #4b238b;
+
+    text-decoration: none;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.game-menu a:hover {
+    background-color: #ead7ff;
+}
+.game-button {
+    display: inline-block;
+
+    margin-top: 30px;
+
+    padding: 15px 40px;
+
+    border-radius: 30px;
+
+    background-color: #6524a8;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.game-button:hover {
+    background-color: #4b1685;
+}
+/* Makhan Hunt game */
+
+.makhan-game {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 25px;
+    justify-content: center;
+    margin-top: 30px;
+}
+.makhan-game button {
+    width: 150px;
+    height: 150px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(75,35,139,0.2);
+    font-size: 65px;
+    cursor: pointer;
+}
+
+
+.makhan-game button:hover {
+    transform: scale(1.08);
+}
+.memory-game {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.memory-card {
+    width: 150px;
+    height: 150px;
+    border: none;
+    border-radius: 20px;
+    background-color: #6524a8;
+    color: white;
+    font-size: 80px;
+    cursor: pointer;
+    padding: 0;
+}
+.memory-card:hover {
+    transform: scale(1.05);
+}
+.content .memory-card {
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    margin: 0;
+    font-size: 100px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.memory-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}

@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Makhan Hunt</title>
+
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+</head>
+
+<body>
+
+    <div class="content">
+
+        <h1>🧈 Makhan Hunt 🏺</h1>
+
+        <p class="festival">
+            Krishna has hidden the Makhan!
+        </p>
+
+        <p>
+            Choose the correct pot 👀
+        </p>
+
+
+        {% if not game_over %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="makhan-game">
+
+                <button type="submit" name="pot" value="1">
+                    🏺
+                </button>
+
+                <button type="submit" name="pot" value="2">
+                    🏺
+                </button>
+
+                <button type="submit" name="pot" value="3">
+                    🏺
+                </button>
+
+            </div>
+
+        </form>
+
+        {% endif %}
+
+
+        {% if game_over %}
+
+            <h2 class="game-message">
+                {{ message }}
+            </h2>
+
+
+            <div class="makhan-game">
+
+                <button disabled>
+
+                    {% if makhan_pot == 1 %}
+                        🧈
+                    {% else %}
+                        🏺
+                    {% endif %}
+
+                </button>
+
+
+                <button disabled>
+
+                    {% if makhan_pot == 2 %}
+                        🧈
+                    {% else %}
+                        🏺
+                    {% endif %}
+
+                </button>
+
+
+                <button disabled>
+
+                    {% if makhan_pot == 3 %}
+                        🧈
+                    {% else %}
+                        🏺
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        name="play_again"
+                        value="yes"
+                        class="game-button">
+
+                    🏺 PLAY AGAIN
+
+                </button>
+
+            </form>
+
+        {% endif %}
+
+
+       <h2>🏆 Score: {{ score }}</h2>
+
+<a href="/game/" class="game-button">
+    🎮 BACK TO GAMES
+</a>
+
+    </div>
+
+</body>
+
+</html>

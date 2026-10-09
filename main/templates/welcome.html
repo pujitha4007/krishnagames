@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Welcome to Krishna's World</title>
+
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+
+<body>
+
+    <div class="content">
+
+        <div class="peacock">🦚</div>
+
+        <h1>Welcome {{ username }}!</h1>
+
+        <p class="festival">
+            Krishna is happy to have you here! 💙
+        </p>
+
+        <p>
+            Get ready for a magical journey ✨
+        </p>
+
+        <a href="/game/" class="game-button">
+            🎮 LET'S PLAY
+        </a>
+
+        <br>
+
+        <a href="/explore/" class="game-button">
+            🌸 EXPLORE KRISHNA
+        </a>
+
+    </div>
+
+</body>
+
+</html>

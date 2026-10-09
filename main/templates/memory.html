@@ -1,0 +1,686 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Memory Match</title>
+
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+    <style>
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 150px);
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+
+        .memory-card {
+            width: 150px;
+            height: 150px;
+
+            border: none;
+            border-radius: 20px;
+
+            padding: 0;
+            margin: 0;
+
+            cursor: pointer;
+
+            background-color: #6524a8;
+
+            overflow: hidden;
+
+            position: relative;
+
+            transition: transform 0.5s;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .memory-card img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 20px;
+        }
+
+
+        .memory-card .picture {
+            font-size: 90px;
+        }
+
+
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+
+        .memory-card.matched {
+            visibility: hidden;
+        }
+
+
+        .memory-card:disabled {
+            cursor: default;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .memory-game {
+                grid-template-columns: repeat(2, 150px);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="content">
+
+        <h1>🧠 Memory Match 🦚</h1>
+
+        <p class="festival">
+            Find the matching Krishna pairs!
+        </p>
+
+
+        <h2 id="level">
+            Level 1
+        </h2>
+
+
+        <h2 id="lives">
+            ❤️ ❤️ ❤️
+        </h2>
+
+
+        <p id="pairs">
+            Pairs: 2
+        </p>
+
+
+        <div class="memory-game" id="memory-game">
+
+        </div>
+
+
+        <div id="level-complete" style="display: none;">
+
+            <h2>
+                🎉 LEVEL COMPLETE! 🎉
+            </h2>
+
+            <p>
+                Excellent memory! 🧠💙
+            </p>
+
+            <h2 id="level-score">
+                +0 Points
+            </h2>
+
+            <button type="button"
+                    class="game-button"
+                    onclick="nextLevel()">
+
+                ➡️ NEXT LEVEL
+
+            </button>
+
+        </div>
+
+
+        <div id="game-over" style="display: none;">
+
+            <h2>
+                💀 GAME OVER 💀
+            </h2>
+
+            <p>
+                You lost all your hearts!
+            </p>
+
+            <h2>
+                🏆 Score: 0
+            </h2>
+
+            <button type="button"
+                    class="game-button"
+                    onclick="startAgain()">
+
+                🔄 START AGAIN
+
+            </button>
+
+        </div>
+
+
+        <h2 id="score">
+            🏆 Score: 0
+        </h2>
+
+
+        <a href="/game/" class="game-button">
+
+            🎮 BACK TO GAMES
+
+        </a>
+
+    </div>
+
+
+<script>
+
+
+    // -------------------------------
+    // GAME VARIABLES
+    // -------------------------------
+
+
+    let firstCard = null;
+
+    let secondCard = null;
+
+    let lives = 3;
+
+    let matchedPairs = 0;
+
+    let checkingCards = false;
+
+
+    let level =
+        Number(localStorage.getItem("memoryLevel")) || 1;
+
+
+    let totalScore =
+        Number(localStorage.getItem("memoryScore")) || 0;
+
+
+
+    // -------------------------------
+    // NUMBER OF PAIRS
+    // -------------------------------
+
+
+    function getNumberOfPairs() {
+
+        return Math.min(
+            Math.floor((level + 1) / 2) + 1,
+            16
+        );
+
+    }
+
+
+    const numberOfPairs = getNumberOfPairs();
+
+
+
+    // -------------------------------
+    // SHOW LEVEL
+    // -------------------------------
+
+
+    document.getElementById("level").innerHTML =
+        "Level " + level;
+
+
+    document.getElementById("pairs").innerHTML =
+        "Pairs: " + numberOfPairs;
+
+
+    document.getElementById("score").innerHTML =
+        "🏆 Score: " + totalScore;
+
+
+
+    // -------------------------------
+    // PICTURES
+    // -------------------------------
+
+
+    const pictures = [
+
+        "🪈",
+        "🦚",
+        "🧈",
+        "🏺",
+        "🪷",
+        "🐄",
+        "👑",
+        "👣"
+
+    ];
+
+
+
+    // -------------------------------
+    // CREATE PAIRS
+    // -------------------------------
+
+
+    let cardPictures = [];
+
+
+    for (let i = 0; i < numberOfPairs; i++) {
+
+        let picture =
+            pictures[i % pictures.length];
+
+
+        cardPictures.push(picture);
+
+        cardPictures.push(picture);
+
+    }
+
+
+
+    // -------------------------------
+    // SHUFFLE CARDS
+    // -------------------------------
+
+
+    cardPictures.sort(
+        function() {
+
+            return Math.random() - 0.5;
+
+        }
+    );
+
+
+
+    // -------------------------------
+    // CREATE CARDS ON SCREEN
+    // -------------------------------
+
+
+    const game =
+        document.getElementById("memory-game");
+
+
+    cardPictures.forEach(
+        function(picture) {
+
+
+            const card =
+                document.createElement("button");
+
+
+            card.type = "button";
+
+            card.className = "memory-card";
+
+
+            card.dataset.picture =
+                picture;
+
+
+            // Krishna image on the back
+
+            card.innerHTML =
+                '<img src="/static/main/krishna1.webp" alt="Krishna">';
+
+
+            game.appendChild(card);
+
+
+
+            // -------------------------------
+            // CLICK CARD
+            // -------------------------------
+
+
+            card.addEventListener(
+                "click",
+                function() {
+
+
+                    // Don't click while checking
+                    // two wrong cards
+
+                    if (checkingCards) {
+
+                        return;
+
+                    }
+
+
+                    // Don't click matched card
+
+                    if (card.disabled) {
+
+                        return;
+
+                    }
+
+
+                    // Don't click same card twice
+
+                    if (card === firstCard) {
+
+                        return;
+
+                    }
+
+
+
+                    // -------------------------------
+                    // SHOW PICTURE
+                    // -------------------------------
+
+
+                    card.innerHTML =
+                        '<span class="picture">'
+                        + picture +
+                        '</span>';
+
+
+                    card.classList.add("flipped");
+
+
+
+                    // -------------------------------
+                    // FIRST CARD
+                    // -------------------------------
+
+
+                    if (firstCard === null) {
+
+                        firstCard = card;
+
+                        return;
+
+                    }
+
+
+
+                    // -------------------------------
+                    // SECOND CARD
+                    // -------------------------------
+
+
+                    secondCard = card;
+
+
+                    checkingCards = true;
+
+
+
+                    // -------------------------------
+                    // MATCH
+                    // -------------------------------
+
+
+                    if (
+                        firstCard.dataset.picture
+                        ===
+                        secondCard.dataset.picture
+                    ) {
+
+
+                        matchedPairs++;
+
+
+                        // Disable both cards
+
+                        firstCard.disabled = true;
+
+                        secondCard.disabled = true;
+
+
+                        // Hide them
+
+                        firstCard.classList.add(
+                            "matched"
+                        );
+
+                        secondCard.classList.add(
+                            "matched"
+                        );
+
+
+                        // Reset cards
+
+                        firstCard = null;
+
+                        secondCard = null;
+
+                        checkingCards = false;
+
+
+
+                        // -------------------------------
+                        // LEVEL COMPLETE
+                        // -------------------------------
+
+
+                        if (
+                            matchedPairs
+                            ===
+                            numberOfPairs
+                        ) {
+
+
+                            let levelPoints =
+                                numberOfPairs * 10;
+
+
+                            totalScore =
+                                totalScore
+                                +
+                                levelPoints;
+
+
+                            localStorage.setItem(
+                                "memoryScore",
+                                totalScore
+                            );
+
+
+                            document.getElementById(
+                                "score"
+                            ).innerHTML =
+                                "🏆 Score: "
+                                +
+                                totalScore;
+
+
+                            document.getElementById(
+                                "level-score"
+                            ).innerHTML =
+                                "+"
+                                +
+                                levelPoints
+                                +
+                                " Points";
+
+
+                            document.querySelector(
+                                ".memory-game"
+                            ).style.display =
+                                "none";
+
+
+                            document.getElementById(
+                                "level-complete"
+                            ).style.display =
+                                "block";
+
+                        }
+
+                    }
+
+
+
+                    // -------------------------------
+                    // WRONG MATCH
+                    // -------------------------------
+
+
+                    else {
+
+
+                        lives =
+                            lives - 1;
+
+
+                        document.getElementById(
+                            "lives"
+                        ).innerHTML =
+
+                            "❤️ ".repeat(lives)
+                            +
+                            "💔 ".repeat(3 - lives);
+
+
+
+                        // IMPORTANT:
+                        // Keep both cards open
+                        // for a short time so the
+                        // player can remember them.
+
+
+                        setTimeout(
+                            function() {
+
+
+                                // Turn both cards
+                                // back to Krishna
+
+
+                                firstCard.innerHTML =
+                                    '<img src="/static/main/krishna1.webp" alt="Krishna">';
+
+
+                                secondCard.innerHTML =
+                                    '<img src="/static/main/krishna1.webp" alt="Krishna">';
+
+
+                                firstCard.classList.remove(
+                                    "flipped"
+                                );
+
+
+                                secondCard.classList.remove(
+                                    "flipped"
+                                );
+
+
+
+                                // -------------------------------
+                                // GAME OVER
+                                // -------------------------------
+
+
+                                if (lives === 0) {
+
+
+                                    document.querySelector(
+                                        ".memory-game"
+                                    ).style.display =
+                                        "none";
+
+
+                                    document.getElementById(
+                                        "game-over"
+                                    ).style.display =
+                                        "block";
+
+
+                                }
+
+
+                                // Reset cards
+
+                                firstCard = null;
+
+                                secondCard = null;
+
+                                checkingCards = false;
+
+
+                            },
+                            800
+                        );
+
+                    }
+
+
+                }
+            );
+
+        }
+    );
+
+
+
+    // -------------------------------
+    // NEXT LEVEL
+    // -------------------------------
+
+
+    function nextLevel() {
+
+
+        level =
+            level + 1;
+
+
+        localStorage.setItem(
+            "memoryLevel",
+            level
+        );
+
+
+        location.reload();
+
+    }
+
+
+
+    // -------------------------------
+    // START AGAIN
+    // -------------------------------
+
+
+    function startAgain() {
+
+
+        localStorage.removeItem(
+            "memoryLevel"
+        );
+
+
+        localStorage.removeItem(
+            "memoryScore"
+        );
+
+
+        location.reload();
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

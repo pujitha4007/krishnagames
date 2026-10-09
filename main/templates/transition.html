@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Entering Krishna's World</title>
+
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+</head>
+
+<body class="transition-page">
+
+    <div class="feather">
+        🪶
+    </div>
+
+    <div class="transition-text">
+        <h1>Welcome to Krishna's World</h1>
+        <p>✨ A magical journey awaits you ✨</p>
+    </div>
+
+    <script>
+
+        setTimeout(function() {
+            window.location.href = "/welcome/";
+        }, 4000);
+
+    </script>
+
+</body>
+
+</html>

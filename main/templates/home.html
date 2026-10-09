@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Krishna Janmashtami</title>
+
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Background Krishna Slideshow -->
+
+    <div class="background-slider">
+
+        <img src="{% static 'main/krishna1.webp' %}" alt="Krishna">
+        <img src="{% static 'main/krishna2.jpg' %}" alt="Krishna">
+        <img src="{% static 'main/krishna3.jpg' %}" alt="Krishna">
+        <img src="{% static 'main/krishna4.jpg' %}" alt="Krishna">
+        <img src="{% static 'main/krishna5.jpg' %}" alt="Krishna">
+
+    </div>
+
+
+    <!-- Light layer over the images -->
+
+    <div class="background-overlay"></div>
+
+
+    <!-- Main Content -->
+
+    <div class="content">
+
+        <div class="peacock">🦚</div>
+
+        <h1>Welcome to Krishna's World 🪈</h1>
+
+        <p class="festival">Happy Janmashtami!</p>
+
+
+        <div class="divider">
+            ✦
+        </div>
+
+
+        <h2>What is your name?</h2>
+
+
+        <form method="POST">
+
+    {% csrf_token %}
+
+    <input
+        type="text"
+        name="username"
+        placeholder="Enter your name"
+        required
+    >
+
+    <br>
+
+    <button type="submit">
+        ENTER →
+    </button>
+
+</form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1014 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Explore Krishna</title>
+
+    <link rel="stylesheet"
+          href="{% static 'main/style.css' %}">
+
+    <style>
+
+        .explore-container {
+
+            width: 95%;
+
+            max-width: 1300px;
+
+            margin: auto;
+
+            text-align: center;
+
+        }
+
+
+        .category-select {
+
+            width: 420px;
+
+            max-width: 90%;
+
+            padding: 15px;
+
+            border: 2px solid #c7ad72;
+
+            border-radius: 15px;
+
+            background-color: white;
+
+            color: #4b238b;
+
+            font-size: 18px;
+
+            font-family: Georgia, serif;
+
+            outline: none;
+
+        }
+
+
+        .get-button {
+
+            margin-top: 20px;
+
+        }
+
+
+        .fact-box {
+
+            width: 800px;
+
+            max-width: 90%;
+
+            margin: 30px auto;
+
+            padding: 20px;
+
+            border-radius: 20px;
+
+            background-color:
+                rgba(255, 255, 255, 0.9);
+
+            color: #4b238b;
+
+            font-size: 19px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* IMAGE GALLERY */
+
+        .picture-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 18px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .picture-card {
+
+            width: 100%;
+
+            height: 220px;
+
+            padding: 0;
+
+            border: none;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            background-color: white;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 12px
+                rgba(75, 35, 139, 0.2);
+
+            transition:
+                transform 0.25s;
+
+        }
+
+
+        .picture-card:hover {
+
+            transform: scale(1.04);
+
+        }
+
+
+        .picture-card img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        /* LOAD MORE */
+
+        .load-more {
+
+            display: none;
+
+            margin: 35px auto;
+
+        }
+
+
+        /* POPUP */
+
+        .image-popup {
+
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-color:
+                rgba(30, 15, 45, 0.90);
+
+            z-index: 100;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .popup-box {
+
+            background-color: #fff3c4;
+
+            width: 700px;
+
+            max-width: 95%;
+
+            max-height: 90%;
+
+            overflow-y: auto;
+
+            padding: 25px;
+
+            border-radius: 25px;
+
+            text-align: center;
+
+        }
+
+
+        .popup-box img {
+
+            width: 100%;
+
+            max-height: 550px;
+
+            object-fit: contain;
+
+            border-radius: 18px;
+
+        }
+
+
+        .popup-quote {
+
+            font-size: 21px;
+
+            font-style: italic;
+
+            color: #6524a8;
+
+            margin: 20px;
+
+        }
+
+
+        .download-button {
+
+            display: inline-block;
+
+            margin-top: 5px;
+
+        }
+
+
+        .close-button {
+
+            position: fixed;
+
+            top: 20px;
+
+            right: 30px;
+
+            color: white;
+
+            font-size: 38px;
+
+            cursor: pointer;
+
+            z-index: 101;
+
+        }
+
+
+        .credit {
+
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            color: #805b17;
+
+        }
+
+
+        .loading {
+
+            display: none;
+
+            margin: 30px;
+
+            font-size: 20px;
+
+            color: #6524a8;
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .picture-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .picture-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .picture-card {
+
+                height: 180px;
+
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .picture-grid {
+
+                grid-template-columns:
+                    repeat(1, 1fr);
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="content">
+
+
+    <div class="explore-container">
+
+
+        <div class="peacock">
+            🦚
+        </div>
+
+
+        <h1>
+            Explore Krishna's World
+        </h1>
+
+
+        <p class="festival">
+
+            Discover Krishna through
+            pictures and facts ✨
+
+        </p>
+
+
+        <div class="divider">
+            ✦
+        </div>
+
+
+        <h2>
+            Choose a category
+        </h2>
+
+
+        <select
+            id="category"
+            class="category-select">
+
+            <option value="">
+                Select a category
+            </option>
+
+            <option value="krishna">
+                🦚 Krishna
+            </option>
+
+            <option value="krishna flute">
+                🪈 Krishna with Flute
+            </option>
+
+            <option value="bal krishna">
+                🧈 Bal Krishna
+            </option>
+
+            <option value="radha krishna">
+                🌸 Radha Krishna
+            </option>
+
+            <option value="krishna cows">
+                🐄 Krishna with Cows
+            </option>
+
+            <option value="krishna crown">
+                👑 Krishna with Crown
+            </option>
+
+            <option value="krishna lotus">
+                🪷 Krishna with Lotus
+            </option>
+
+            <option value="krishna peacock">
+                🦚 Krishna and Peacock
+            </option>
+
+        </select>
+
+
+        <br>
+
+
+        <button
+            type="button"
+            class="game-button get-button"
+            onclick="getPictures()">
+
+            🦚 GET KRISHNA PICTURES
+
+        </button>
+
+
+        <div
+            id="loading"
+            class="loading">
+
+            ✨ Loading Krishna pictures...
+
+        </div>
+
+
+        <!-- FACT -->
+
+        <div
+            id="fact-box"
+            class="fact-box"
+            style="display:none;">
+
+        </div>
+
+
+        <!-- IMAGE GALLERY -->
+
+        <div
+            id="picture-grid"
+            class="picture-grid">
+
+        </div>
+
+
+        <!-- LOAD MORE -->
+
+        <button
+            id="load-more"
+            type="button"
+            class="game-button load-more"
+            onclick="loadMore()">
+
+            🔄 LOAD MORE
+
+        </button>
+
+
+        <br>
+
+
+        <a
+            href="/welcome/"
+            class="game-button">
+
+            🏠 BACK TO WELCOME
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- IMAGE POPUP -->
+
+<div
+    id="image-popup"
+    class="image-popup">
+
+
+    <span
+        class="close-button"
+        onclick="closePopup()">
+
+        ✕
+
+    </span>
+
+
+    <div class="popup-box">
+
+
+        <img
+            id="popup-image"
+            src=""
+            alt="Krishna">
+
+
+        <p
+            id="popup-quote"
+            class="popup-quote">
+
+        </p>
+
+
+        <a
+            id="download-button"
+            class="game-button download-button"
+            href="#"
+            target="_blank">
+
+            ⬇️ DOWNLOAD IMAGE
+
+        </a>
+
+
+        <p
+            id="credit"
+            class="credit">
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+let currentCategory = "";
+
+let currentPage = 0;
+
+let totalPages = 1;
+
+let currentPhotos = [];
+
+
+const quotes = [
+
+    "Let Krishna's love fill your heart with joy. 💙",
+
+    "Where there is Krishna, there is peace. 🦚",
+
+    "Walk with faith and let Krishna guide your heart. 🪈",
+
+    "Krishna reminds us to choose love, courage and wisdom. 🌸",
+
+    "A heart filled with devotion is always beautiful. 🪷",
+
+    "Keep smiling and keep faith in Krishna. 💙",
+
+    "May Krishna bring peace and happiness into your life. 🦚"
+
+];
+
+
+function getPictures() {
+
+
+    currentCategory =
+        document.getElementById(
+            "category"
+        ).value;
+
+
+    if (currentCategory === "") {
+
+        alert(
+            "Please select a category first! 🦚"
+        );
+
+        return;
+
+    }
+
+
+    currentPage = 0;
+
+    totalPages = 1;
+
+    currentPhotos = [];
+
+
+    document.getElementById(
+        "picture-grid"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "fact-box"
+    ).style.display = "none";
+
+
+    loadMore();
+
+}
+
+
+function loadMore() {
+
+
+    if (
+        currentPage >= totalPages
+        &&
+        currentPage !== 0
+    ) {
+
+        alert(
+            "No more pictures available for this category."
+        );
+
+        return;
+
+    }
+
+
+    currentPage++;
+
+
+    document.getElementById(
+        "loading"
+    ).style.display = "block";
+
+
+    fetch(
+        "/explore-api/?category="
+        +
+        encodeURIComponent(
+            currentCategory
+        )
+        +
+        "&page="
+        +
+        currentPage
+    )
+
+
+    .then(
+        response => {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "API request failed"
+                );
+
+            }
+
+            return response.json();
+
+        }
+    )
+
+
+    .then(
+        data => {
+
+
+            document.getElementById(
+                "loading"
+            ).style.display = "none";
+
+
+            if (data.error) {
+
+                throw new Error(
+                    data.error
+                );
+
+            }
+
+
+            totalPages =
+                data.total_pages;
+
+
+            showPictures(
+                data.photos
+            );
+
+
+            if (currentPage === 1) {
+
+                showFact(
+                    data.fact
+                );
+
+            }
+
+
+            updateLoadMoreButton();
+
+        }
+    )
+
+
+    .catch(
+        error => {
+
+            document.getElementById(
+                "loading"
+            ).style.display = "none";
+
+
+            console.log(error);
+
+
+            alert(
+                "Something went wrong while getting the pictures."
+            );
+
+        }
+    );
+
+}
+
+
+function showPictures(photos) {
+
+
+    const grid =
+        document.getElementById(
+            "picture-grid"
+        );
+
+
+    photos.forEach(
+        photo => {
+
+
+            currentPhotos.push(
+                photo
+            );
+
+
+            const card =
+                document.createElement(
+                    "button"
+                );
+
+
+            card.type = "button";
+
+
+            card.className =
+                "picture-card";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+
+            image.src =
+                photo.image;
+
+
+            image.alt =
+                "Krishna";
+
+
+            image.loading =
+                "lazy";
+
+
+            card.appendChild(
+                image
+            );
+
+
+            card.onclick =
+                function() {
+
+                    openPopup(
+                        photo
+                    );
+
+                };
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+function showFact(fact) {
+
+
+    const box =
+        document.getElementById(
+            "fact-box"
+        );
+
+
+    box.innerHTML =
+
+        "<strong>📖 Krishna Fact</strong>"
+        +
+        "<br><br>"
+        +
+        fact;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+function updateLoadMoreButton() {
+
+
+    const button =
+        document.getElementById(
+            "load-more"
+        );
+
+
+    if (
+        currentPage < totalPages
+    ) {
+
+        button.style.display =
+            "inline-block";
+
+    }
+
+    else {
+
+        button.style.display =
+            "none";
+
+    }
+
+}
+
+
+function openPopup(photo) {
+
+
+    document.getElementById(
+        "popup-image"
+    ).src =
+        photo.full_image;
+
+
+    const randomIndex =
+        Math.floor(
+            Math.random()
+            *
+            quotes.length
+        );
+
+
+    document.getElementById(
+        "popup-quote"
+    ).innerHTML =
+        quotes[randomIndex];
+
+
+    document.getElementById(
+        "credit"
+    ).innerHTML =
+
+        "Photo by "
+        +
+        "<a href='"
+        +
+        photo.photographer_url
+        +
+        "' target='_blank'>"
+        +
+        photo.photographer
+        +
+        "</a>"
+        +
+        " on "
+        +
+        "<a href='"
+        +
+        photo.unsplash_url
+        +
+        "' target='_blank'>Unsplash</a>";
+
+
+    document.getElementById(
+        "download-button"
+    ).onclick =
+        function() {
+
+            triggerDownload(
+                photo
+            );
+
+        };
+
+
+    document.getElementById(
+        "image-popup"
+    ).style.display =
+        "flex";
+
+}
+
+
+function triggerDownload(photo) {
+
+
+    /*
+       Tell Unsplash that the image
+       is being downloaded.
+    */
+
+    fetch(
+        "/download-photo/?download_location="
+        +
+        encodeURIComponent(
+            photo.download_location
+        )
+    )
+    .catch(
+        error => {
+
+            console.log(
+                "Download tracking error:",
+                error
+            );
+
+        }
+    );
+
+
+    /*
+       Download ONLY the image.
+       The quote is NOT included.
+    */
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        photo.full_image;
+
+
+    link.download =
+        "krishna-image.jpg";
+
+
+    link.target =
+        "_blank";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+}
+
+
+function closePopup() {
+
+
+    document.getElementById(
+        "image-popup"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "popup-image"
+    ).src = "";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
